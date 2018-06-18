@@ -38,6 +38,12 @@ public class Main {
         AnnosDao annokset = new AnnosDao(database);
         AnnosRaakaAineDao annosRaakaAineet= new AnnosRaakaAineDao(database, annokset, raakaAineet);
         
+        Spark.get("/", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("annokset", annokset.findAll());
+            return new ModelAndView(map, "index");
+        }, new ThymeleafTemplateEngine());
+        
         //aloitussivun tuominen
         Spark.get("/index.html", (req, res) -> {
             HashMap map = new HashMap<>();
